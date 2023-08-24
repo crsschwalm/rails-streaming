@@ -1,0 +1,2 @@
+module StreamTextHelper
+end

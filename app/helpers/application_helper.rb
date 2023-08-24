@@ -1,2 +1,5 @@
 module ApplicationHelper
-end
+    def randomNum
+      @randomNum ||= SecureRandom.base64
+    end
+  end

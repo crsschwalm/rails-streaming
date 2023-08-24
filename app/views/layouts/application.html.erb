@@ -1,16 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html class="country">
   <head>
     <title>ScratchRails</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <script id="load-timing" type="text/javascript">
+    new PerformanceObserver((list, observer) => {
+      list.getEntries().forEach((entry) => {
+        if (entry.entryType === "mark") {
+          console.log(`${entry.name}'s startTime: ${Math.floor(entry.startTime)}`);
+        }
+        if (entry.entryType === "measure") {
+          console.log(`${entry.name}'s duration: ${Math.floor(entry.duration) / 1000} (s)`);
+        }
+      });
+    }).observe({ entryTypes: ["measure", "mark"] });
+
+    performance.mark("start:app-load");
+  </script>
   </head>
 
+
+
   <body>
+
+    <h3> App Layout </h3>
+
+    <p>the rest of the content is blocked for seconds in <strong><code>?sleep=N</code></strong></p>
+
+    <%= yield :kindaSlow %>
+
+    <p> (This is actually in the Layout, but it was blocked) </p>
+
+    # renders template
     <%= yield %>
   </body>
 </html>
