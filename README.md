@@ -1,24 +1,34 @@
-# README
+# Scratch Rails Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Trying out [ActionController::Streaming](https://api.rubyonrails.org/classes/ActionController/Streaming.html) and [ActionController::Live](https://api.rubyonrails.org/classes/ActionController/Live.html).
 
-Things you may want to cover:
+## Run the app locally
 
-* Ruby version
+1. Clone the app
+2. Install Ruby (v2.7.0) & sqlite3
+3. Install Rails `gem install rails`
+4. `cd <project>`
+5. Start the server `bin/rails server`
 
-* System dependencies
 
-* Configuration
+## Routes
 
-* Database creation
+### `/` (`/?sleep=3`)
 
-* Database initialization
+renders the default layout in `application.html.erb` and the "dashboard" template `dashboard/index.html.erb`
 
-* How to run the test suite
+Accepts a query param `sleep` which increases the time to derive a slow function in the DashboardController.
 
-* Services (job queues, cache servers, search engines, etc.)
+This shows capabilities of HTML streaming - you should see `<head>` content as well as Layout content that precedes rendering the dashboard template.
 
-* Deployment instructions
+### `/stream`
 
-* ...
+This route streams text content via the StreamController.  It updates the response value 5 times, waiting 1 second after each write.
+
+
+### Caveats
+
+In both cases, it was necessary to modify the response header like:
+`response.headers['Last-Modified'] = Time.now.httpdate`
+
+This is from a bug pointed out [here](https://github.com/rack/rack/issues/1619#issuecomment-848460528)
