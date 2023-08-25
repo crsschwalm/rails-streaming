@@ -5,7 +5,7 @@ Trying out [ActionController::Streaming](https://api.rubyonrails.org/classes/Act
 ## Run the app locally
 
 1. Clone the app
-2. Install Ruby (v2.7.0) & sqlite3
+2. Install Ruby
 3. Install Rails `gem install rails`
 4. `cd <project>`
 5. Start the server `bin/rails server`

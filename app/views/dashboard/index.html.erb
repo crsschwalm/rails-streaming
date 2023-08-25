@@ -1,15 +1,14 @@
-<div>
-    <h3>Streamed in template</h3>
+<%= content_for :kindaSlowString, controller.kindaSlowString %>
 
-    <p>This shouldnt add time <%= randomNum %></p>
+<div>
+    <h3>Dashboard Template (Streamed)</h3>
+
+    <p>This is what we've been waiting for: <%= controller.actuallySlowThing %></p>
+
+    <em>And this lil-piggy should render last</em>
 </div>
 
-<%= content_for :kindaSlow, controller.kindaSlow %>
 
-
-<p>This is what we're waiting for: <%= controller.some_slow_action %></p>
-
-<em>And this lil-piggy should load last</em>
 
 <script id="load-timing-finished" type="text/javascript">
   performance.mark("end:app-load");

@@ -2,7 +2,7 @@ class DashboardController < ApplicationController
   def index
     start_app_time = Time.now
     response.headers['Last-Modified'] = Time.now.httpdate
-
+    @helloWorld = "Hello from Dashboard#Controller"
     end_app_time = Time.now
     elapsed_load_time = end_app_time - start_app_time
     Rails.logger.info "Elapsed For fetched data is #{elapsed_load_time} s"
@@ -10,12 +10,12 @@ class DashboardController < ApplicationController
     render stream: true
   end
 
-  def kindaSlow
-    "I'm a variable from dashboard_controller (but immediately set)"
+  def kindaSlowString
+    "This is just a slow string"
   end
 
 
-  def some_slow_action
+  def actuallySlowThing
     start_time = Time.now
     return @the_slow_thing if defined? @the_slow_thing
 
@@ -37,7 +37,7 @@ class DashboardController < ApplicationController
 
     end_time = Time.now
     elapsed_time = end_time - start_time
-    Rails.logger.info "elapsed_time of some_slow_action#{elapsed_time}"
+    Rails.logger.info "elapsed_time of actuallySlowThing: #{elapsed_time}"
 
     return @the_slow_thing
   end

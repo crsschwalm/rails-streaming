@@ -30,11 +30,14 @@
 
     <p>the rest of the content is blocked for seconds in <strong><code>?sleep=N</code></strong></p>
 
-    <%= yield :kindaSlow %>
+    <ol>
+        <li>(Application Helper) - Random Number: <strong><%= randomNum %></strong></li>
 
-    <p> (This is actually in the Layout, but it was blocked) </p>
+        <li>(Dashboard Controller) - Instance Variable: <strong><%= @helloWorld %></strong></li>
 
-    # renders template
-    <%= yield %>
+        <li>(Dashboard Template provided this variable) - stringFromDashboardController: <strong><%= yield :kindaSlowString %></strong></li>
+
+        <li>(Dashboard Template) - yeild <%= yield %>
+    </ol>
   </body>
 </html>
