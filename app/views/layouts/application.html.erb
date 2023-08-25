@@ -6,20 +6,16 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <script id="load-timing" type="text/javascript">
-    new PerformanceObserver((list, observer) => {
-      list.getEntries().forEach((entry) => {
-        if (entry.entryType === "mark") {
-          console.log(`${entry.name}'s startTime: ${Math.floor(entry.startTime)}`);
-        }
-        if (entry.entryType === "measure") {
-          console.log(`${entry.name}'s duration: ${Math.floor(entry.duration) / 1000} (s)`);
-        }
-      });
-    }).observe({ entryTypes: ["measure", "mark"] });
 
-    performance.mark("start:app-load");
-  </script>
+  <style>
+        .container {
+          display: flex;
+          flex-direction: column;
+        }
+        .perf-output-container {
+          height: 300px;
+        }
+  </style>
   </head>
 
 
@@ -30,14 +26,48 @@
 
     <p>the rest of the content is blocked for seconds in <strong><code>?sleep=N</code></strong></p>
 
-    <ol>
+    <div class="container">
+      <div class="perf-output-container">
+        <h3>Check the console for timing marks</h3>
+        <pre>
+          <code id="#perf-output">
+          </code>
+        </pre>
+      </div>
+
+      <script id="load-timing" type="text/javascript">
+        new PerformanceObserver((list, observer) => {
+          list.getEntries().forEach((entry) => {
+            const message = (() => {
+              if (entry.entryType === "mark") {
+                return `${entry.name}'s startTime: ${Math.floor(entry.startTime)}`;
+              }
+              if (entry.entryType === "measure") {
+                return `${entry.name}'s duration: ${Math.floor(entry.duration) / 1000} (s)`;
+              }
+            })()
+            console.log(message);
+            const messageNode = document.createTextNode(`\n > ${message}`);
+            document.getElementById("#perf-output").append(messageNode);
+          });
+        }).observe({ entryTypes: ["measure", "mark"] });
+
+        performance.mark("start:app-load");
+      </script>
+
+      <ol class="templates">
         <li>(Application Helper) - Random Number: <strong><%= randomNum %></strong></li>
 
         <li>(Dashboard Controller) - Instance Variable: <strong><%= @helloWorld %></strong></li>
 
+        <li style="line-height:1">(Dashboard Controller) - Sleeper method... <strong><%= controller.slowMethod %></strong></li>
+
         <li>(Dashboard Template provided this variable) - stringFromDashboardController: <strong><%= yield :kindaSlowString %></strong></li>
 
         <li>(Dashboard Template) - yeild <%= yield %>
-    </ol>
+      </ol>
+
+    </div>
+
   </body>
 </html>

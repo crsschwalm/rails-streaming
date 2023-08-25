@@ -14,6 +14,10 @@ class DashboardController < ApplicationController
     "This is just a slow string"
   end
 
+  def slowMethod
+    sleep(2)
+    "executed in 2 seconds 😴😴😴"
+  end
 
   def actuallySlowThing
     start_time = Time.now
@@ -29,10 +33,12 @@ class DashboardController < ApplicationController
         if sleepyTime > 0
           Rails.logger.info "sleepyTime #{sleepyTime}"
           sleep(sleepyTime)
+
+          return "Executed in #{sleepyTime}s"
         end
       end
 
-      "the_slow_thing_value"
+      "Executed in 0s. Slow this down with `?sleep=<int>`"
     end
 
     end_time = Time.now
